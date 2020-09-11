@@ -1,7 +1,8 @@
 a {
     text-decoration: none;
-    font-size: 15px;
+    font-size: 1em;
     font-family: Snell Roundhand, cursive;
+    color: cadetblue;
 }
 
 h1 {
@@ -10,11 +11,15 @@ h1 {
     text-align: center;
 }
 
+li {
+    list-style-type: none;
+}
+
 h6 {
     margin: 0;
     padding: 0;
     font-family: Palatino, URW Palladio L, serif;
-    font-size: 15px;
+    text-align: center;
 }
 
 p {
@@ -23,24 +28,15 @@ p {
     color: #444444;
 }
 
-ul {
-    list-style: none;
+@media screen and (max-width: 600px) {
+    p {
+        font-size: 4px;
+    }
+    a {
+        font-size: 4px;
+    }
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-header {
-    padding: 5px;
-    margin: 5px;
-}
-
-header nav {
-    display: block;
-}
 
 .login div {
     background-color: aqua;
@@ -72,70 +68,19 @@ header nav {
     display: block;
 }
 
-.help ul {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-
-.help a {
-    display: block;
-    width: 15em;
-    padding: 10px;
-    margin: 0 5px;
-    background-color: #f4f4f4;
-    border: 1px dashed #333;
-    color: #333;
-    text-align: center;
-}
-
-.help a:hover {
-    background-color: #333;
-    color: #f4f4f4;
-}
-
 body {
     background-color: #F0FFFF;
 }
 
-.right-part {
-    border-left: 3px solid #008080;
-    border-bottom: 3px solid #008080;
-    background-color: #FFFAFA;
-}
-
-.left-part, .right-part {
-    margin: 1em;
-    padding: 1em;
-}
-
-.left-part {
-    width: 15%;
+.right-part, .left-part {
+    padding: 3em 1em;
+    margin: 1em 0;
 }
 
 .left-part a img {
-    width: 15em;
+    width: 100%;
     border-radius: 50%;
     margin: 0.25em 0.5em;
-}
-
-.right-part {
-}
-
-.left-part nav {
-    display: block;
-    float: left;
-    padding: 0.5%;
-    margin: 0 1% 1%;
-}
-
-.left-part ul {
-    padding: 0;
-    margin: 0;
-}
-
-.left-part h6 {
-    text-align: center;
 }
 
 .description nav {
@@ -150,6 +95,12 @@ body {
 .description ul {
     margin: 0;
     padding: 2px;
+}
+
+.right-part {
+    border-left: 3px solid #008080;
+    border-bottom: 3px solid #008080;
+    background-color: #FFFAFA;
 }
 
 main h1 {
