@@ -12,12 +12,16 @@ function theme(id) {
 
 function switch_theme() {
     let body = document.getElementById('body');
-    cursor++;
-    text_color = 0;
-    if  (cursor === 4) {
+    if (cursor === colors.length) {
         cursor = 0;
-        text_color = 3;
     }
-    body.style.color = colors[text_color];
+    if (cursor === 0) {
+        text_color = colors.length - 1;
+    }
+    else {
+        text_color = 0;
+    }
     body.style.background = colors[cursor];
+    body.style.color = colors[text_color];
+    cursor++;
 }
