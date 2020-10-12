@@ -1,4 +1,4 @@
-package itis.Tyshenko;
+package itis.Tyshenko.entity;
 
 public class User {
     private final String name;

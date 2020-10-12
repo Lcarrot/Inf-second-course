@@ -1,13 +1,13 @@
-package itis.Tyshenko;
+package itis.Tyshenko.utility;
 
 import com.opencsv.CSVWriter;
-
+import itis.Tyshenko.entity.User;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class UserDataWriter {
 
-    private static final String path = "C:\\Users\\olga1\\Desktop\\projects\\info\\FirstSemester\\RegistrationServlet\\web\\data.csv";
+    private static final String path = "C:\\Users\\olga1\\Desktop\\projects\\info\\FirstSemester\\RegistrationServlet\\src\\main\\webapp\\data.csv";
     public static void writeUserInCSV(User user) {
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(path,true));

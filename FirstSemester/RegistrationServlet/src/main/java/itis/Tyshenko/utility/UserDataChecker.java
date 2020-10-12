@@ -1,4 +1,4 @@
-package itis.Tyshenko;
+package itis.Tyshenko.utility;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +18,7 @@ public class UserDataChecker {
         this.name = name;
         this.email = email;
         this.country = country;
-        this.password = password;
+        this.password = password.trim();
         this.gender = gender;
     }
 
@@ -48,6 +48,6 @@ public class UserDataChecker {
     }
 
     public boolean checkPasswordEquals(String confirmedPassword) {
-        return password.equals(confirmedPassword);
+        return password.equals(confirmedPassword.trim());
     }
 }
