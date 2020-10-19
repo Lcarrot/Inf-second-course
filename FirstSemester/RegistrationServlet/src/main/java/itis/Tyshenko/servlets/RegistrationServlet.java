@@ -48,6 +48,6 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/registration.html").forward(request,response);
+        getServletContext().getRequestDispatcher("WEB-INF/resources/registration.jsp").forward(request,response);
     }
 }

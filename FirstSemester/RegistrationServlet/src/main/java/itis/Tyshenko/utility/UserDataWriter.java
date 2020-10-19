@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class UserDataWriter {
 
-    private static final String path = "C:\\Users\\olga1\\Desktop\\projects\\info\\FirstSemester\\RegistrationServlet\\src\\main\\webapp\\data.csv";
+    private static final String path = "C:\\Users\\olga1\\Desktop\\projects\\info\\FirstSemester\\RegistrationServlet\\src\\main\\webapp\\data\\data.csv";
     public static void writeUserInCSV(User user) {
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(path,true));
