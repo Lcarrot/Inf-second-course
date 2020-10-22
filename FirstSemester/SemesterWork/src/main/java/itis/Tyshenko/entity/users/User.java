@@ -14,6 +14,6 @@ public abstract class User {
     protected final String login;
     protected final String email;
     protected final String country;
-    protected final int hashPassword;
+    protected final String hashPassword;
     protected final boolean gender;
 }

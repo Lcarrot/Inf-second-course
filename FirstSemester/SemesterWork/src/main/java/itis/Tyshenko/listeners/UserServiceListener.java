@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @WebListener
-public class UserListener implements ServletContextListener {
+public class UserServiceListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();

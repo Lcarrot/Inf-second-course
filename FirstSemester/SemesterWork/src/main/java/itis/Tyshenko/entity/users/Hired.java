@@ -3,12 +3,16 @@ package itis.Tyshenko.entity.users;
 import lombok.*;
 
 @Builder
+@ToString
+@Getter
+@Setter
 public class Hired extends User {
-    private final String name;
-    private final String surname;
-    private final String login;
-    private final String email;
-    private final String country;
-    private final int hashPassword;
-    private final boolean gender;
+    private long id;
+    private String name;
+    private String surname;
+    private String login;
+    private String email;
+    private String country;
+    private String hashPassword;
+    private boolean gender;
 }
