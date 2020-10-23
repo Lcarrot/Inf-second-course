@@ -3,11 +3,7 @@ package itis.Tyshenko.entity.users;
 
 import lombok.*;
 
-@Builder
-@ToString
 @Getter
-@Setter
-@EqualsAndHashCode
 public abstract class User {
     protected final String name;
     protected final String surname;

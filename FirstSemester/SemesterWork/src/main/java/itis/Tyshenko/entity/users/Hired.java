@@ -1,14 +1,14 @@
 package itis.Tyshenko.entity.users;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Builder
-@ToString
 @Getter
-@Setter
 public class Hired extends User {
     private long id;
-    private String name;
+    private String first_name;
     private String surname;
     private String login;
     private String email;
