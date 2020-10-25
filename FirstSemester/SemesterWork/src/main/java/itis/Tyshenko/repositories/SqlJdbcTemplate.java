@@ -14,9 +14,8 @@ public class SqlJdbcTemplate<T> {
         this.dataSource = dataSource;
     }
 
-    public List<T> queryForReceive(String sql, RowMapper<T> rowMapper, Object ... args) {
+    public List<T> queryForReceive(String sql, RowMapper<T> rowMapper, List<Object> arguments) {
         List<T> result = new LinkedList<>();
-        List<Object> arguments = Arrays.asList(args);
         try (PreparedStatement statement = addParametersInStatement(sql, arguments);
              ResultSet resultSet = statement.executeQuery())
         {
@@ -24,7 +23,7 @@ public class SqlJdbcTemplate<T> {
                 T record = rowMapper.mapRow(resultSet);
                 result.add(record);
             }
-        } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
         return result;
@@ -42,10 +41,14 @@ public class SqlJdbcTemplate<T> {
     private PreparedStatement addParametersInStatement(String sql, List<Object> args) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
-        int count = args.size();
-        for (int i = 1; i <= count; i++) {
-            statement.setObject(i, args.get(i));
+
+        if (args != null) {
+            int count = args.size();
+            for (int i = 1; i <= count; i++) {
+                statement.setObject(i, args.get(i));
+            }
         }
+
         return statement;
     }
 }

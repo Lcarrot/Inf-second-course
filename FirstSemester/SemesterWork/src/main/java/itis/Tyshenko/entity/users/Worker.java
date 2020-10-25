@@ -1,16 +1,15 @@
 package itis.Tyshenko.entity.users;
 
-import lombok.*;
+public class Worker extends User {
 
-@Getter
-public class Hirer extends User {
-    private long id;
+    private String id;
     private String first_name;
     private String surname;
     private String login;
     private String email;
     private String country;
     private String hashPassword;
-    private boolean gender;
-    private String org;
+    private Boolean gender;
+    private String role;
+    private String organization;
 }

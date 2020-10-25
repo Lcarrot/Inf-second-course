@@ -1,13 +1,9 @@
 package itis.Tyshenko.listeners;
 
-import itis.Tyshenko.repositories.HiredRepository;
-import itis.Tyshenko.repositories.HiredRepositoryImpl;
-import itis.Tyshenko.repositories.HirerRepository;
-import itis.Tyshenko.repositories.HirerRepositoryImpl;
-import itis.Tyshenko.services.HiredService;
-import itis.Tyshenko.services.HiredServiceImpl;
-import itis.Tyshenko.services.HirerService;
-import itis.Tyshenko.services.HirerServiceImpl;
+import itis.Tyshenko.repositories.ads.AdRepositoryReflection;
+import itis.Tyshenko.repositories.users.UserRepositoryReflection;
+import itis.Tyshenko.services.AdServiceImpl;
+import itis.Tyshenko.services.UserServiceImpl;
 import itis.Tyshenko.utility.HikariDataSourceTuner;
 
 import javax.servlet.ServletContext;
@@ -23,19 +19,24 @@ public class UserServiceListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
+
         Properties properties = new Properties();
         try {
             properties.load(servletContext.getResourceAsStream("/WEB-INF/db.properties"));
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
+
         DataSource dataSource = HikariDataSourceTuner.getDataSource(properties);
-        HiredRepository hiredRepository = new HiredRepositoryImpl(dataSource);
-        HirerRepository hirerRepository = new HirerRepositoryImpl(dataSource);
-        HirerService hirerService = new HirerServiceImpl(hirerRepository);
-        HiredService hiredService = new HiredServiceImpl(hiredRepository);
-        servletContext.setAttribute("hirerService", hirerService);
-        servletContext.setAttribute("hiredService", hiredService);
+
+//        AdRepository adRepository = new AdRepositoryReflection(dataSource);
+//        UserRepository userRepository = new UserRepositoryReflection(dataSource);
+//
+//        AdService adService = new AdServiceImpl(adRepository);
+//        UserService userService = new UserServiceImpl(userRepository);
+//
+//        servletContext.setAttribute("adService", adService);
+//        servletContext.setAttribute("userService", userService);
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

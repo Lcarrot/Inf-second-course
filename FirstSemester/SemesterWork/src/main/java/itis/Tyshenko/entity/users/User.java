@@ -1,15 +1,18 @@
 package itis.Tyshenko.entity.users;
 
-
-import lombok.*;
+import lombok.Getter;
 
 @Getter
 public abstract class User {
-    protected final String name;
-    protected final String surname;
-    protected final String login;
-    protected final String email;
-    protected final String country;
-    protected final String hashPassword;
-    protected final boolean gender;
+
+    private String id;
+    private String first_name;
+    private String surname;
+    private String login;
+    private String email;
+    private String country;
+    private String hashPassword;
+    private Boolean gender;
+    private String role;
+    private String organization;
 }

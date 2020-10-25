@@ -1,7 +1,7 @@
 package itis.Tyshenko.repositories;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 public interface CrudRepository<T> {
 
@@ -9,6 +9,6 @@ public interface CrudRepository<T> {
     void update(T entity);
     void delete(T entity);
 
-    Optional<T> findById(Long id);
     List<T> findAll();
+    List<T> findByParameters(String sql, Map<String, Object> fields);
 }
