@@ -1,7 +1,12 @@
 package itis.Tyshenko.repositories.users;
 
-import itis.Tyshenko.entity.users.User;
+import itis.Tyshenko.entity.User;
 import itis.Tyshenko.repositories.CrudRepository;
 
-public interface UserRepository<T extends User> extends CrudRepository<T> {
+import java.util.Optional;
+
+public interface UserRepository extends CrudRepository<User> {
+
+    Optional<User> getByLogin(String login);
+    Optional<User> getById(Long id);
 }

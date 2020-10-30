@@ -29,5 +29,5 @@
 </header>
 
 <style>
-    <%@include file="../../resources/css/index.css" %>
+    <%@include file="../../views/css/index.css" %>
 </style>

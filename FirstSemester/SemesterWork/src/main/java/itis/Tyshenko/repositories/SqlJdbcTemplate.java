@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 public class SqlJdbcTemplate<T> {
     DataSource dataSource;
@@ -14,14 +16,24 @@ public class SqlJdbcTemplate<T> {
         this.dataSource = dataSource;
     }
 
-    public List<T> queryForReceive(String sql, RowMapper<T> rowMapper, List<Object> arguments) {
+    public T queryForObject(String sql, RowMapper<T> rowMapper, Object ... arguments) {
+        try (PreparedStatement statement = addParametersInStatement(sql, arguments);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                 return rowMapper.mapRow(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+        return null;
+    }
+
+    public List<T> queryForReceive(String sql, RowMapper<T> rowMapper, Object ... arguments) {
         List<T> result = new LinkedList<>();
         try (PreparedStatement statement = addParametersInStatement(sql, arguments);
-             ResultSet resultSet = statement.executeQuery())
-        {
+             ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                T record = rowMapper.mapRow(resultSet);
-                result.add(record);
+                result.add(rowMapper.mapRow(resultSet));
             }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
@@ -29,26 +41,26 @@ public class SqlJdbcTemplate<T> {
         return result;
     }
 
-    public void queryForChange(String sql, List<Object> args) {
-
-        try (PreparedStatement statement = addParametersInStatement(sql, args)){
+    public Optional<Object> queryForChange(String sql, List<Object> arguments) {
+        Object[] args = arguments.toArray();
+        try (PreparedStatement statement = addParametersInStatement(sql, args)) {
             statement.executeUpdate();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return Optional.ofNullable(generatedKeys.getObject(1));
+            }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
+        return Optional.empty();
     }
 
-    private PreparedStatement addParametersInStatement(String sql, List<Object> args) throws SQLException {
+    private PreparedStatement addParametersInStatement(String sql, Object[] args) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
-
-        if (args != null) {
-            int count = args.size();
-            for (int i = 1; i <= count; i++) {
-                statement.setObject(i, args.get(i));
-            }
+        for (int i = 0; i < args.length; i++) {
+            statement.setObject(i + 1, args[i]);
         }
-
         return statement;
     }
 }

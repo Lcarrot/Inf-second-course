@@ -1,7 +1,6 @@
 package itis.Tyshenko.repositories.ads;
 
-import itis.Tyshenko.entity.ads.ServiceAd;
-import itis.Tyshenko.entity.ads.WorkAd;
+import itis.Tyshenko.entity.WorkAd;
 import itis.Tyshenko.repositories.ReflectionCrudRepository;
 import itis.Tyshenko.repositories.RowMapper;
 import itis.Tyshenko.repositories.SqlJdbcTemplate;
@@ -85,7 +84,6 @@ public class ReflectionWorkAdRepository extends ReflectionCrudRepository<WorkAd>
         return template.queryForReceive(SQL_SELECT_ALL, rowMapper, null);
     }
 
-    @Override
     public List<WorkAd> findByParameters(String sql, Map<String, Object> entity) {
         Set<String> fieldsList = entity.keySet();
         //language=SQL

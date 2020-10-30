@@ -1,7 +1,6 @@
 package itis.Tyshenko.repositories.ads;
 
-import itis.Tyshenko.entity.ads.ServiceAd;
-import itis.Tyshenko.entity.users.Worker;
+import itis.Tyshenko.entity.ServiceAd;
 import itis.Tyshenko.repositories.ReflectionCrudRepository;
 import itis.Tyshenko.repositories.RowMapper;
 import itis.Tyshenko.repositories.SqlJdbcTemplate;
@@ -10,8 +9,6 @@ import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class ReflectionServiceAdRepository extends ReflectionCrudRepository<ServiceAd> implements ServiceAdRepository{
     private final String[] fieldNames = {"id", "first_name", "surname", "email", "login", "hashPassword", "country", "gender", "org"};
@@ -82,16 +79,6 @@ public class ReflectionServiceAdRepository extends ReflectionCrudRepository<Serv
     public List<ServiceAd> findAll() {
         //language=SQL
         String SQL_SELECT_ALL = "select * from ad_Service;";
-        return template.queryForReceive(SQL_SELECT_ALL, rowMapper, null);
-    }
-
-    @Override
-    public List<ServiceAd> findByParameters(String sql, Map<String, Object> entity) {
-        Set<String> fieldsList = entity.keySet();
-        //language=SQL
-        String SQL_SELECT = "select * from ad_Service where ";
-        String sqlString = addParamAfterWhereToSqlRequest(SQL_SELECT, fieldsList);
-        List<Object> args = getEntityParam(entity);
-        return template.queryForReceive(sqlString, rowMapper, args);
+        return template.queryForReceive(SQL_SELECT_ALL, rowMapper);
     }
 }

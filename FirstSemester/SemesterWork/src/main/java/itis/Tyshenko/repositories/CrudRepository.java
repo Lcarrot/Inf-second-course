@@ -10,5 +10,4 @@ public interface CrudRepository<T> {
     void delete(T entity);
 
     List<T> findAll();
-    List<T> findByParameters(String sql, Map<String, Object> fields);
 }

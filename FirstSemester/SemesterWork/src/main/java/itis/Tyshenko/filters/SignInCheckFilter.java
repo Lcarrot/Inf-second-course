@@ -3,12 +3,13 @@ package itis.Tyshenko.filters;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebFilter(filterName = "BrowserFilter", value = "/*")
-public class BrowserFilter implements Filter {
+@WebFilter(filterName = "BrowserFilter", urlPatterns = "/service/*")
+public class SignInCheckFilter implements Filter {
 
     FilterConfig config;
 
@@ -20,12 +21,10 @@ public class BrowserFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String header = request.getHeader("User-Agent").toLowerCase();
-        if (header.contains("edge")) {
-            PrintWriter printWriter = servletResponse.getWriter();
-            printWriter.println("Are you genius?");
-            printWriter.flush();
-            printWriter.close();
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        HttpSession session = request.getSession();
+        if (session.getAttribute("authorized") == null || !session.getAttribute("authorized").equals("true")) {
+            config.getServletContext().getRequestDispatcher("/signIn").forward(request, response);
         }
         else {
             filterChain.doFilter(servletRequest, servletResponse);

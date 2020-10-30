@@ -1,10 +1,16 @@
 package itis.Tyshenko.listeners;
 
-import itis.Tyshenko.repositories.ads.AdRepositoryReflection;
-import itis.Tyshenko.repositories.users.UserRepositoryReflection;
-import itis.Tyshenko.services.AdServiceImpl;
+import itis.Tyshenko.repositories.ads.ReflectionServiceAdRepository;
+import itis.Tyshenko.repositories.ads.ReflectionWorkAdRepository;
+import itis.Tyshenko.repositories.ads.ServiceAdRepository;
+import itis.Tyshenko.repositories.ads.WorkAdRepository;
+import itis.Tyshenko.repositories.users.ReflectionUserRepository;
+import itis.Tyshenko.repositories.users.UserRepository;
+import itis.Tyshenko.services.UserService;
 import itis.Tyshenko.services.UserServiceImpl;
 import itis.Tyshenko.utility.HikariDataSourceTuner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -27,16 +33,15 @@ public class UserServiceListener implements ServletContextListener {
             throw new IllegalStateException(e);
         }
 
-        DataSource dataSource = HikariDataSourceTuner.getDataSource(properties);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        servletContext.setAttribute("passwordEncoder", passwordEncoder);
 
-//        AdRepository adRepository = new AdRepositoryReflection(dataSource);
-//        UserRepository userRepository = new UserRepositoryReflection(dataSource);
-//
-//        AdService adService = new AdServiceImpl(adRepository);
-//        UserService userService = new UserServiceImpl(userRepository);
-//
-//        servletContext.setAttribute("adService", adService);
-//        servletContext.setAttribute("userService", userService);
+        DataSource dataSource = HikariDataSourceTuner.getDataSource(properties);
+//        ServiceAdRepository serviceAdRepository = new ReflectionServiceAdRepository(dataSource);
+//        WorkAdRepository workAdRepository = new ReflectionWorkAdRepository(dataSource);
+        UserRepository userRepository = new ReflectionUserRepository(dataSource);
+        UserService userService = new UserServiceImpl(userRepository, passwordEncoder);
+        servletContext.setAttribute("userService", userService);
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
