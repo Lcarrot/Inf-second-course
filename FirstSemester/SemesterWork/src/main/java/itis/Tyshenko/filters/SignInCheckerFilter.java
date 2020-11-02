@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(filterName = "BrowserFilter", urlPatterns = "/service/*")
-public class SignInCheckFilter implements Filter {
+public class SignInCheckerFilter implements Filter {
 
     FilterConfig config;
 
@@ -20,11 +20,9 @@ public class SignInCheckFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession();
+        HttpSession session = ((HttpServletRequest) servletRequest).getSession();
         if (session.getAttribute("authorized") == null || !session.getAttribute("authorized").equals("true")) {
-            config.getServletContext().getRequestDispatcher("/signIn").forward(request, response);
+            ((HttpServletResponse) servletResponse).sendRedirect(config.getServletContext().getContextPath() + "/signIn");
         }
         else {
             filterChain.doFilter(servletRequest, servletResponse);

@@ -5,31 +5,31 @@
 <t:layout>
     <jsp:attribute name="title"> Sign In </jsp:attribute>
     <jsp:attribute name="header">
-        <t:header></t:header>
+        <t:header />
     </jsp:attribute>
     <jsp:attribute name="main">
-        <t:registrationForm postAction="signIn">
+        <t:form postAction="signIn">
             <jsp:attribute name="title">
                 Sign In
             </jsp:attribute>
             <jsp:attribute name="feilds">
-                <div class="container">
-                    <div class="form-group row">
-                        <label for="login" class="col-sm-2 col-form-label">Login:</label>
-                        <div class="col-sm-10">
-                            <input name="login" id="login" class="form-control" placeholder="write your name here">
-                        </div>
-                    </div>
-                </div>
-            <div class="container">
-                <div class="form-group row">
-                    <label for="password" class="col-sm-2 col-form-label">password:</label>
-                    <div class="col-sm-10">
-                        <input name="password" type="password" id="password" class="form-control"
-                               placeholder="write your password here">
-                    </div>
-                </div>
-            </div>
+                <t:inputField>
+    <jsp:attribute name="label">
+         <label for="login" class="col-sm-2 col-form-label">Login:</label>
+    </jsp:attribute>
+    <jsp:attribute name="input">
+         <input name="login" id="login" class="form-control" placeholder="write your name here">
+    </jsp:attribute>
+</t:inputField>
+                <t:inputField>
+    <jsp:attribute name="label">
+        <label for="password" class="col-sm-2 col-form-label">password:</label>
+    </jsp:attribute>
+    <jsp:attribute name="input">
+        <input name="password" type="password" id="password" class="form-control"
+               placeholder="write your password here">
+    </jsp:attribute>
+</t:inputField>
                 <div class="container">
                     <div class="form-group row">
                 <c:if test="${sessionScope.get('authorized') == 'false'}">
@@ -40,9 +40,9 @@
                     </div>
                 </div>
             </jsp:attribute>
-        </t:registrationForm>
+        </t:form>
     </jsp:attribute>
     <jsp:attribute name="footer">
-        <t:footer></t:footer>
+        <t:footer />
     </jsp:attribute>
 </t:layout>

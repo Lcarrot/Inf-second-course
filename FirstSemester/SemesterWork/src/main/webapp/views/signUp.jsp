@@ -15,47 +15,49 @@
         <t:header></t:header>
     </jsp:attribute>
     <jsp:attribute name="main">
-        <t:registrationForm postAction="signUp">
+        <t:form postAction="signUp">
         <jsp:attribute name="title">
                     Sign Up
                 </jsp:attribute>
             <jsp:attribute name="feilds">
-                <div class="container">
-                    <div class="form-group row">
-                        <label for="name" class="col-sm-2 col-form-label">Login:</label>
-                        <div class="col-sm-10">
-                            <input name="login" id="name" type="text" class="form-control" placeholder="write your name here" required="^[a-zA-Z0-9]{3,}$">
-                        </div>
-                    </div>
-                </div>
-<div class="container">
-    <div class="form-group row">
+                <t:inputField>
+    <jsp:attribute name="label">
+        <label for="name" class="col-sm-2 col-form-label">Login:</label>
+    </jsp:attribute>
+    <jsp:attribute name="input">
+        <input name="login" id="name" type="text" class="form-control"
+               placeholder="write your name here" required="^[a-zA-Z0-9]{3,}$">
+    </jsp:attribute>
+</t:inputField>
+                <t:inputField>
+    <jsp:attribute name="label">
         <label for="email" class="col-sm-2 col-form-label">e-mail:</label>
-        <div class="col-sm-10">
-            <input name="email" id="email" type="email" class="form-control"
-                   placeholder="write your e-mail here"
-                   required="^[_A-Za-z0-9-+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$">
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="form-group row">
+    </jsp:attribute>
+    <jsp:attribute name="input">
+        <input name="email" id="email" type="email" class="form-control"
+               placeholder="write your e-mail here"
+               required="^[_A-Za-z0-9-+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$">
+    </jsp:attribute>
+</t:inputField>
+                <t:inputField>
+    <jsp:attribute name="label">
         <label for="password" class="col-sm-2 col-form-label">password:</label>
-        <div class="col-sm-10">
-            <input name="password" id="password" type="password" class="form-control" placeholder="write your password here"
-            required="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$">
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="form-group row">
+    </jsp:attribute>
+    <jsp:attribute name="input">
+        <input name="password" id="password" type="password" class="form-control"
+               placeholder="write your password here"
+               required="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$">
+    </jsp:attribute>
+</t:inputField>
+<t:inputField>
+    <jsp:attribute name="label">
         <label for="confirmedPassword" class="col-sm-2 col-form-label">confirm password:</label>
-        <div class="col-sm-10">
-            <input name="confirm_password" type="password" id="confirmedPassword" class="form-control"
-                   placeholder="confirm the password here">
-        </div>
-    </div>
-</div>
+    </jsp:attribute>
+    <jsp:attribute name="input">
+        <input name="confirm_password" type="password" id="confirmedPassword" class="form-control"
+               placeholder="confirm the password here">
+    </jsp:attribute>
+</t:inputField>
 <div class="container">
     <div class="form-group col-md-4">
         <label for="inputCountry">Country</label>
@@ -96,10 +98,9 @@
                     </div>
                 </div>
             </jsp:attribute>
-    </t:registrationForm>
+    </t:form>
     </jsp:attribute>
     <jsp:attribute name="footer">
         <t:footer></t:footer>
     </jsp:attribute>
-
 </t:layout>

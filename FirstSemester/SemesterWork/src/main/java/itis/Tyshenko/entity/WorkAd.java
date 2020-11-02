@@ -1,7 +1,13 @@
 package itis.Tyshenko.entity;
 
+import lombok.*;
+
+@Builder
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class WorkAd extends Ad {
 
-    private Long lowPrice;
-    private Long highPrice;
+    private Long price;
 }

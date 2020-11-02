@@ -1,11 +1,16 @@
 package itis.Tyshenko.entity;
 
-import lombok.Getter;
+import lombok.*;
 
+@Builder
 @Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public abstract class Ad {
+
     protected String id;
-    protected String name;
+    protected String header;
     protected String description;
-    protected String theme;
+    private String contact;
 }

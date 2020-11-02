@@ -3,10 +3,8 @@ package itis.Tyshenko.services;
 import itis.Tyshenko.dto.UserDTO;
 import itis.Tyshenko.entity.User;
 import itis.Tyshenko.repositories.users.UserRepository;
-import itis.Tyshenko.statuses.SignInStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Map;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -20,20 +18,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByLogin(String login) {
-        return userRepository.getByLogin(login);
-    }
-    @Override
-    public boolean equalsRowPasswordWithUserPassword(User user, String password) {
-        return passwordEncoder.matches(password, user.getHashPassword());
+    public Optional<UserDTO> getUserByLogin(String login) {
+        Optional<User> optionalUser = userRepository.getByLogin(login);
+        UserDTO userDTO = null;
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            userDTO = UserDTO.builder().id(user.getId()).
+                    country(user.getCountry()).email(user.getEmail())
+                    .gender(user.getGender() ? "male" : "female").login(user.getLogin()).password(user.getHashPassword()).build();
+        }
+        return Optional.ofNullable(userDTO);
     }
 
     @Override
-    public User addUser(UserDTO entity) {
+    public boolean equalsRowPasswordWithUserPassword(String password, String user_hashPassword) {
+        return passwordEncoder.matches(password, user_hashPassword);
+    }
+
+    @Override
+    public void updateUser(UserDTO entity, String password) {
+        String hashPassword = passwordEncoder.encode(password);
+        User user = User.builder().id(entity.getId()).login(entity.getLogin()).
+                gender(entity.getGender().equals("male")).country(entity.getCountry())
+                .email(entity.getEmail()).hashPassword(hashPassword).build();
+        userRepository.update(user);
+        entity.setPassword(hashPassword);
+    }
+
+    @Override
+    public void addUser(UserDTO entity, String password) {
+        String hashPassword = passwordEncoder.encode(password);
         User user = User.builder().id(null).login(entity.getLogin()).
                 gender(entity.getGender().equals("male")).country(entity.getCountry())
-                .email(entity.getEmail()).hashPassword(passwordEncoder.encode(entity.getPassword())).build();
+                .email(entity.getEmail()).hashPassword(hashPassword).build();
         userRepository.save(user);
-        return user;
+        entity.setPassword(hashPassword);
+        entity.setId(user.getId());
     }
 }

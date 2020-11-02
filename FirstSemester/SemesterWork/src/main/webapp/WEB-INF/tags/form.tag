@@ -13,7 +13,7 @@
     <div class="container">
         <div class="form-group row">
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" value="submit"> Sign up</button>
+                <button type="submit" class="btn btn-primary" value="submit"> Send </button>
             </div>
         </div>
     </div>

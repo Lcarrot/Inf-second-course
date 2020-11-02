@@ -1,19 +1,17 @@
 package itis.Tyshenko.servlets;
 
 import itis.Tyshenko.dto.UserDTO;
-import itis.Tyshenko.entity.User;
 import itis.Tyshenko.services.UserService;
-import itis.Tyshenko.utility.PreparerMessageForSignUp;
+import itis.Tyshenko.utility.PreparerMessageForUserData;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
+
+import static itis.Tyshenko.utility.PreparedRequestTemplate.getUserDtoFromRequest;
 
 @WebServlet(name = "SignUp", value = "/signUp")
 public class UserSignUpServlet extends HttpServlet {
@@ -34,26 +32,25 @@ public class UserSignUpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDTO userDTO = getUserDtoFromRequest(req);
+        String password = req.getParameter("password");
         String confirm_password = req.getParameter("confirm_password");
         String agreed = req.getParameter("agree");
-        PreparerMessageForSignUp preparer = new PreparerMessageForSignUp(userDTO, confirm_password, agreed);
+        boolean rememberMe = req.getParameter("remember-checkbox") != null;
+        PreparerMessageForUserData preparer = new PreparerMessageForUserData(userDTO, password, confirm_password);
         HttpSession session= req.getSession();
-        if (preparer.checkFields()) {
+        if (preparer.checkFields() || rememberMe) {
             session.setAttribute("authorized", "true");
-            User user = userService.addUser(userDTO);
-            session.setAttribute("user", user);
-            getServletContext().getRequestDispatcher("service/profile").forward(req, resp);
+            userService.addUser(userDTO, password);
+            session.setAttribute("user", userDTO);
+            //// TODO: 10/31/2020 сделать cookie для входа на сайт;
+            resp.sendRedirect(req.getContextPath() + "/service/profile");
         }
         else {
             session.setAttribute("authorized", "false");
-            String error = preparer.getMessage();
+            String agreedMessage = "if you don't agree with our rules, you can't use our site =()";
+            String error = preparer.getMessage(agreedMessage);
             req.setAttribute("description", error);
             req.getRequestDispatcher("/views/signUp.jsp").forward(req, resp);
         }
-    }
-
-    private UserDTO getUserDtoFromRequest(HttpServletRequest request) {
-        return UserDTO.builder().login(request.getParameter("login")).email(request.getParameter("email")).country(request.getParameter("country")).
-                gender(request.getParameter("gender")).password(request.getParameter("password")).build();
     }
 }

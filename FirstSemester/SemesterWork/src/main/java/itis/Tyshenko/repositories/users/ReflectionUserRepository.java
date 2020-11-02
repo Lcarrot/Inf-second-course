@@ -39,8 +39,8 @@ public class ReflectionUserRepository extends ReflectionCrudRepository<User> imp
     }
 
     //language=SQL
-    private final String SQL_UPDATE = "update set id = ?, email = ?," +
-            " login = ?, hashPassword = ?, country = ?, gender = ? from users where id = ?";
+    private final String SQL_UPDATE = "update users set login = ?," +
+            " email = ?, gender = ?, country = ?, hashPassword = ? where id = ?";
 
     @Override
     public void update(User entity) {

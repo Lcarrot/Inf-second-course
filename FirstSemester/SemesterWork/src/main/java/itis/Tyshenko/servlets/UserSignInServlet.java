@@ -1,5 +1,6 @@
 package itis.Tyshenko.servlets;
 
+import itis.Tyshenko.dto.UserDTO;
 import itis.Tyshenko.entity.User;
 import itis.Tyshenko.services.UserService;
 import itis.Tyshenko.statuses.SignInStatus;
@@ -43,15 +44,14 @@ public class UserSignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        Optional<User> optionalUser = userService.getUserByLogin(login);
+        Optional<UserDTO> optionalUser = userService.getUserByLogin(login);
         HttpSession session = req.getSession();
-        User user;
-        if (optionalUser.isPresent() && userService.equalsRowPasswordWithUserPassword((user = optionalUser.get()), password)) {
-                session.setAttribute("authorized", "true");
-                session.setAttribute("user", user);
-                context.getRequestDispatcher("/service/profile").forward(req, resp);
-        }
-        else {
+        if (optionalUser.isPresent() && userService.equalsRowPasswordWithUserPassword(password, optionalUser.get().getPassword())) {
+            UserDTO user = optionalUser.get();
+            session.setAttribute("authorized", "true");
+            session.setAttribute("user", user);
+            resp.sendRedirect(req.getContextPath() + "/service/profile");
+        } else {
             SignInStatus status = optionalUser.isPresent() ? PASSWORDS_DO_NOT_MATCH : LOGIN_DOES_NOT_EXIST;
             session.setAttribute("authorized", "false");
             req.setAttribute("errorCode", statusDescription.get(status));
