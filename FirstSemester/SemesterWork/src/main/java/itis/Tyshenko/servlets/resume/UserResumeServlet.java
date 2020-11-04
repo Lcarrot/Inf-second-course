@@ -27,8 +27,8 @@ public class UserResumeServlet extends HttpServlet {
         UserDTO userDTO = (UserDTO) req.getSession().getAttribute("user");
         Optional<ResumeDTO> optionalResume = resumeService.getByUserId(userDTO.id);
         if (optionalResume.isPresent()) {
-            ResumeDTO resumes = optionalResume.get();
-            Optional<List<AdDTO>> optionalAdDTOS = adService.getAllByResumeId(resumes.id);
+            ResumeDTO resume = optionalResume.get();
+            Optional<List<AdDTO>> optionalAdDTOS = adService.getAllByResumeId(resume.id);
             if (optionalAdDTOS.isPresent()) {
                 req.setAttribute("adsIsEmpty", "false");
                 req.setAttribute("ads", optionalAdDTOS.get());
@@ -36,10 +36,10 @@ public class UserResumeServlet extends HttpServlet {
             else {
                 req.setAttribute("adsIsEmpty", "true");
             }
-            req.setAttribute("resumes", resumes);
+            req.setAttribute("resume", resume);
             req.getRequestDispatcher("/views/getAllResume.jsp").forward(req, resp);
         }
-        resp.sendRedirect(req.getServletContext() + "/");
+        resp.sendRedirect(req.getServletContext() + "/service/myResume/create");
     }
 
     @Override
