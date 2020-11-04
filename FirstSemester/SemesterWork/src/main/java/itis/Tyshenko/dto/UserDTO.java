@@ -9,10 +9,10 @@ import lombok.*;
 @EqualsAndHashCode
 public class UserDTO {
 
-    private Long id;
-    private String login;
-    private String email;
-    private String country;
-    private String password;
-    private String gender;
+    public Long id;
+    public String login;
+    public String email;
+    public String country;
+    public String password;
+    public String gender;
 }

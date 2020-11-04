@@ -28,15 +28,6 @@
                placeholder="write your description" required>
     </jsp:attribute>
         </t:inputField>
-        <t:inputField>
-        <jsp:attribute name="label">
-        <label for="price" class="col-sm-2 col-form-label">price:</label>
-    </jsp:attribute>
-    <jsp:attribute name="input">
-        <input name="price" type="number" id="price" class="form-control"
-               placeholder="write your price" required>
-    </jsp:attribute>
-                </t:inputField>
     <t:inputField>
         <jsp:attribute name="label">
         <label for="contact" class="col-sm-2 col-form-label">Contact information:</label>

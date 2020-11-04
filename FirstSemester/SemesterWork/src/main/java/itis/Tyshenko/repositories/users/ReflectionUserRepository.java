@@ -2,8 +2,8 @@ package itis.Tyshenko.repositories.users;
 
 import itis.Tyshenko.entity.User;
 import itis.Tyshenko.repositories.ReflectionCrudRepository;
-import itis.Tyshenko.repositories.RowMapper;
-import itis.Tyshenko.repositories.SqlJdbcTemplate;
+import itis.Tyshenko.repositories.utility.RowMapper;
+import itis.Tyshenko.repositories.utility.SqlJdbcTemplate;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -55,6 +55,7 @@ public class ReflectionUserRepository extends ReflectionCrudRepository<User> imp
 
     //language=SQL
     private final String SQL_DELETE = "delete from users where id = ?";
+
     @Override
     public void delete(User entity) {
         List<Object> params = new LinkedList<>();
@@ -64,6 +65,7 @@ public class ReflectionUserRepository extends ReflectionCrudRepository<User> imp
 
     //language=SQL
     private final String SQL_SELECT_ALL = "select * from users;";
+
     @Override
     public List<User> findAll() {
         return template.queryForReceive(SQL_SELECT_ALL, rowMapper);
@@ -71,6 +73,7 @@ public class ReflectionUserRepository extends ReflectionCrudRepository<User> imp
 
     //language=SQL
     private final String SQL_SELECT_BY_LOGIN = "select * from users where login = ?";
+
     @Override
     public Optional<User> getByLogin(String login) {
         User user = template.queryForObject(SQL_SELECT_BY_LOGIN, rowMapper, login);
@@ -79,6 +82,7 @@ public class ReflectionUserRepository extends ReflectionCrudRepository<User> imp
 
     //language=SQL
     private final String SQL_SELECT_BY_ID = "SELECT * from users where id = ?";
+
     @Override
     public Optional<User> getById(Long id) {
         User user = template.queryForObject(SQL_SELECT_BY_ID, rowMapper, id);

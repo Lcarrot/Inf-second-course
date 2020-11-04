@@ -31,14 +31,6 @@
                pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$" required>
     </jsp:attribute>
 </t:inputField>
-<t:inputField>
-    <jsp:attribute name="label">
-        <label for="confirmedPassword" class="col-sm-2 col-form-label">new password:</label>
-    </jsp:attribute>
-    <jsp:attribute name="input">
-        <input name="new_password" type="password" id="confirmedPassword" class="form-control">
-    </jsp:attribute>
-</t:inputField>
 <div class="container">
     <div class="form-group col-md-4">
         <label for="inputCountry">change country</label>

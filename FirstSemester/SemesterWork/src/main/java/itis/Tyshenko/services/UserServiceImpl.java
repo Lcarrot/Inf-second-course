@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getUserByLogin(String login) {
+    public Optional<UserDTO> getByLogin(String login) {
         Optional<User> optionalUser = userRepository.getByLogin(login);
         UserDTO userDTO = null;
         if (optionalUser.isPresent()) {
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserDTO entity, String password) {
+    public void update(UserDTO entity, String password) {
         String hashPassword = passwordEncoder.encode(password);
         User user = User.builder().id(entity.getId()).login(entity.getLogin()).
                 gender(entity.getGender().equals("male")).country(entity.getCountry())
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(UserDTO entity, String password) {
+    public void add(UserDTO entity, String password) {
         String hashPassword = passwordEncoder.encode(password);
         User user = User.builder().id(null).login(entity.getLogin()).
                 gender(entity.getGender().equals("male")).country(entity.getCountry())

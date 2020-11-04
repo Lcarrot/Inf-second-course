@@ -7,13 +7,11 @@ import lombok.*;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Ad {
+public class Resume {
 
     private Long id;
     private String header;
     private String description;
     private String contact;
-    private Long price;
     private Long user_id;
-    private Long resume_id;
 }

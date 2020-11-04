@@ -36,16 +36,4 @@ public abstract class ReflectionCrudRepository<T> implements CrudRepository<T> {
         }
         return fieldsMap;
     }
-
-    protected String addParamAfterWhereToSqlRequest(String sql, Set<String> fieldsName) {
-        StringBuffer buffer = new StringBuffer(sql);
-        Iterator<String> iterator = fieldsName.iterator();
-        for (int i = 0; i < fieldsName.size() - 1; i++) {
-            String field = iterator.next();
-            buffer.append(" ").append(field).append(" = ?,");
-        }
-        String field = iterator.next();
-        buffer.append(" ").append(field).append(" = ?;");
-        return buffer.toString();
-    }
 }

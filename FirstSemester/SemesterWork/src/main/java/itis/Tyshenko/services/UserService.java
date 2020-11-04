@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Optional<UserDTO> getUserByLogin(String login);
+    Optional<UserDTO> getByLogin(String login);
 
-    void addUser(UserDTO entity, String password);
+    void add(UserDTO entity, String password);
     boolean equalsRowPasswordWithUserPassword(String userHashedPassword, String password);
-    void updateUser(UserDTO entity, String password);
+    void update(UserDTO entity, String password);
 }
