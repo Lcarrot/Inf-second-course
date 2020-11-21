@@ -13,4 +13,6 @@ public class AdDTO {
     public String description;
     public String contact;
     public String price;
+    public String user_login;
+    public Long user_id;
 }

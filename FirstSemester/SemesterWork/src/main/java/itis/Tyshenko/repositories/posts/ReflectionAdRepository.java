@@ -81,6 +81,14 @@ public class ReflectionAdRepository extends ReflectionCrudRepository<Ad> impleme
     }
 
     //language=SQL
+    String SQL_SELECT_BY_ID = "select * from ads where user_id = ?;";
+
+    @Override
+    public Optional<Ad> getById(Long id) {
+        return Optional.ofNullable(template.queryForObject(SQL_SELECT_BY_ID, rowMapper, id));
+    }
+
+    //language=SQL
     private final String SQL_SELECT_BY_RESUME_ID = "select * from ads where resume_id = ?";
 
     @Override

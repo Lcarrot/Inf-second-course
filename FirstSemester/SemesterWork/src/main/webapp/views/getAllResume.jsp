@@ -9,13 +9,16 @@
         <jsp:useBean id="resumes" type="java.util.List"/>
         <div class="row"></div>
         <c:forEach items="${resumes}" var="resume">
-            <div class="col-6 col-sm-3">
-                <p>${resume.header}</p>
-                <p>${resume.description}</p>
-                <p>${resume.contact}</p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">${resume.header}</h5>
+                    <p class="card-text">${resume.description}</p>
+                    <p class="card-text">${resume.contact}</p>
+                    <a href="${pageContext.request.contextPath}/profile?id=${resume.user_id}">user</a>
+                </div>
             </div>
         </c:forEach>
     </jsp:attribute>
-    <jsp:attribute name="footer"><t:footer /></jsp:attribute>
+    <jsp:attribute name="footer"><t:footer/></jsp:attribute>
 </t:layout>
 

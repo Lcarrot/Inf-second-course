@@ -44,9 +44,6 @@ public class UserSignUpServlet extends HttpServlet {
             session.setAttribute("authorized", "true");
             userService.add(userDTO, password);
             session.setAttribute("user", userDTO);
-            if (rememberMe) {
-                //// TODO: 10/31/2020 сделать cookie для входа на сайт;
-            }
             resp.sendRedirect(req.getContextPath() + "/service/profile");
         }
         else {

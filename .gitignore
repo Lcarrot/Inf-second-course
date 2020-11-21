@@ -1,6 +1,5 @@
 # packages #
 **/.idea/
-.git/
 **/out/
 **/target/
 **/lib/

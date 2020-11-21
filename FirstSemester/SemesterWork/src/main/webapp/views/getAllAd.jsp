@@ -9,11 +9,12 @@
         <jsp:useBean id="ads" scope="request" type="java.util.List"/>
         <div class="row"></div>
         <c:forEach items="${ads}" var="ads">
-            <div class="col-6 col-sm-3">
-                <p>${ads.header}</p>
-                <p>${ads.description}</p>
-                <p>${ads.contact}</p>
-                <p>${ads.price}</p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">${ads.header}</h5>
+                    <p class="card-text">${ads.description}</p>
+                    <a href="${pageContext.request.contextPath}/jobs/job?id=${ads.id}" class="btn btn-primary">more details</a>
+                </div>
             </div>
         </c:forEach>
     </jsp:attribute>

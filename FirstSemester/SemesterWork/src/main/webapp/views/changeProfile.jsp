@@ -6,11 +6,13 @@
     <jsp:attribute name="title"> Change data </jsp:attribute>
     <jsp:attribute name="header"> <t:header/></jsp:attribute>
     <jsp:attribute name="main">
+        <jsp:useBean id="user" scope="session" type="itis.Tyshenko.dto.UserDTO"/>
+        <c:out value="${user}"/>
         <t:form postAction="">
             <jsp:attribute name="title"> Change your data </jsp:attribute>
             <jsp:attribute name="feilds">
                 <div class="container">
-                    <label> login : ${requestScope.get("login")}</label>
+                    <label> login : ${sessionScope.get("user").login}</label>
                 </div>
                 <t:inputField>
     <jsp:attribute name="label">
@@ -18,7 +20,7 @@
     </jsp:attribute>
     <jsp:attribute name="input">
 <input name="email" id="email" type="email" class="form-control"
-       value="${requestScope.get("email")}"
+       value="${sessionScope.get("user").email}"
        pattern="^[_A-Za-z0-9-+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$">
     </jsp:attribute>
 </t:inputField>

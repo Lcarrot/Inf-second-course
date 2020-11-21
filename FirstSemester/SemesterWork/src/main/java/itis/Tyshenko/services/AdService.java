@@ -9,6 +9,7 @@ public interface AdService {
 
     void add(AdDTO adDTO, Long useId);
     List<AdDTO> getAll();
+    Optional<AdDTO> getById(Long id);
     List<AdDTO> getAllByUserID(Long user_id);
     Optional<List<AdDTO>> getAllByResumeId(Long resume_id);
 }

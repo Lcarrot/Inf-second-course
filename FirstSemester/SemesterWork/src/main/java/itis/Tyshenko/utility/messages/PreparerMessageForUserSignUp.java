@@ -51,7 +51,7 @@ public class PreparerMessageForUserSignUp extends PreparerMessageUsingBuilder<Si
         if (!checkEmail(userDTO.getEmail())) statuses.add(SignUpStatus.WRONG_EMAIL);
         if (!checkCountry(userDTO.getCountry())) statuses.add(SignUpStatus.NO_CHOOSE_COUNTRY);
         if (!checkGender(userDTO.getGender())) statuses.add(SignUpStatus.NO_CHOOSE_GENDER);
-        if (!checkPassword(userDTO.getPassword())) statuses.add(SignUpStatus.WRONG_PASSWORD);
+        if (!checkPassword(password)) statuses.add(SignUpStatus.WRONG_PASSWORD);
         if (!checkPasswordEquals(password, confirm_password)) statuses.add(SignUpStatus.PASSWORDS_DO_NOT_MATCH);
         if (statuses.size() == 0) statuses.add(SignUpStatus.OK);
         return statuses;

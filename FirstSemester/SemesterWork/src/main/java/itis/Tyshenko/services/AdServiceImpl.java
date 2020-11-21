@@ -31,13 +31,25 @@ public class AdServiceImpl implements AdService {
     @Override
     public List<AdDTO> getAll() {
         List<Ad> ads =  repository.findAll();
-        return convertAd(ads);
+        return convertAds(ads);
+    }
+
+    @Override
+    public Optional<AdDTO> getById(Long id) {
+        Optional<Ad> optionalAd = repository.getById(id);
+        if (optionalAd.isPresent()) {
+            Ad ad = optionalAd.get();
+            return Optional.of(AdDTO.builder().id(ad.getId()).description(ad.getDescription()).
+                    contact(ad.getContact()).header(ad.getHeader()).
+                    price(ad.getPrice().toString()).user_id(ad.getUser_id()).build());
+        }
+        return Optional.empty();
     }
 
     @Override
     public List<AdDTO> getAllByUserID(Long user_id) {
         List<Ad> ads = repository.getAllByUserID(user_id);
-        return convertAd(ads);
+        return convertAds(ads);
     }
 
     @Override
@@ -45,16 +57,17 @@ public class AdServiceImpl implements AdService {
         List<AdDTO> adDTOS = null;
         Optional<List<Ad>> ads = repository.getByResumeID(resume_id);
         if (ads.isPresent()) {
-            adDTOS =  convertAd(ads.get());
+            adDTOS =  convertAds(ads.get());
         }
         return Optional.ofNullable(adDTOS);
     }
 
-    private List<AdDTO> convertAd(List<Ad> ads) {
+    private List<AdDTO> convertAds(List<Ad> ads) {
         List<AdDTO> adDTOS = new LinkedList<>();
         for (Ad ad: ads) {
             AdDTO adDTO = AdDTO.builder().id(ad.getId()).description(ad.getDescription()).
-                    contact(ad.getContact()).header(ad.getHeader()).price(ad.getPrice().toString()).build();
+                    contact(ad.getContact()).header(ad.getHeader()).
+                    price(ad.getPrice().toString()).user_id(ad.getUser_id()).build();
             adDTOS.add(adDTO);
         }
         return adDTOS;

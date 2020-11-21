@@ -14,11 +14,13 @@
         <c:if test="${sessionScope.get('adsIsEmpty') == 'false'}">
         <jsp:useBean id="ads" type="java.util.List"/>
         <div class="row"></div>
-        <c:forEach items="${ads}" var="ad">
-            <div class="col-6 col-sm-3">
-                <p>${ad.header}</p>
-                <p>${ad.description}</p>
-                <p>${ad.contact}</p>
+        <c:forEach items="${ads}" var="ads">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">${ads.header}</h5>
+                    <p class="card-text">{ads.description}</p>
+                    <a href="${pageContext.request.contextPath}/jobs/job?id=${ads.id}" class="btn btn-primary">more details</a>
+                </div>
             </div>
         </c:forEach>
         </c:if>

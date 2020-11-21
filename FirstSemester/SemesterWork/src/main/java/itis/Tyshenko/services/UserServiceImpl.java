@@ -55,4 +55,17 @@ public class UserServiceImpl implements UserService {
         entity.setPassword(hashPassword);
         entity.setId(user.getId());
     }
+
+    @Override
+    public Optional<UserDTO> getById(Long id) {
+        Optional<User> optionalUser = userRepository.getById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return Optional.of(UserDTO.builder().id(user.getId()).
+                    country(user.getCountry()).email(user.getEmail())
+                    .gender(user.getGender() ? "male" : "female").login(user.getLogin())
+                    .password(user.getHashPassword()).build());
+        }
+        return Optional.empty();
+    }
 }

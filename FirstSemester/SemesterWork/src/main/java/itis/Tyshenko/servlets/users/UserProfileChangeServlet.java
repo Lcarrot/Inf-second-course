@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static itis.Tyshenko.utility.PreparedRequestTemplateForEntity.setRequestAttributeForUser;
 import static itis.Tyshenko.utility.DataChecker.*;
 
 @WebServlet(name = "ChangeUserData", value = "/service/profile/change")
@@ -25,7 +24,7 @@ public class UserProfileChangeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
-        setRequestAttributeForUser(req, user);
+        req.setAttribute("user", user);
         req.getRequestDispatcher("/views/changeProfile.jsp").forward(req, resp);
     }
 
@@ -35,7 +34,6 @@ public class UserProfileChangeServlet extends HttpServlet {
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         String country = req.getParameter("country");
-        setRequestAttributeForUser(req, user);
         if (userService.equalsRowPasswordWithUserPassword(password, user.getPassword())) {
             PreparerMessage<ChangeUserStatus> preparer = new PreparerMessageForUserChange(email);
             if (preparer.checkFields()) {
