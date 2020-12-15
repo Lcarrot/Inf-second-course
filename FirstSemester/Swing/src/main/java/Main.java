@@ -102,11 +102,7 @@ public class Main {
             int width = panel.getSize().width;
             int height = panel.getSize().height;
             shape = new Rectangle((width / 3), (height / 3), width / 3, height / 3);
-            SwingUtilities.invokeLater(() -> {
-                graphics.draw(shape);
-                graphics.setColor(Color.BLACK);
-                graphics.fill(shape);
-            });
+            SwingUtilities.invokeLater(() -> drawShape(shape, Color.black));
         });
         drawButton.addMouseListener(new MouseListener() {
             @Override
@@ -171,9 +167,7 @@ public class Main {
                     panel.repaint();
                     SwingUtilities.invokeLater(() -> {
                         graphics.rotate(Math.toRadians(20), panel.getSize().width / 2.0, panel.getSize().height / 2.0);
-                        graphics.draw(shape);
-                        graphics.setColor(Color.BLACK);
-                        graphics.fill(shape);
+                        drawShape(shape, Color.BLACK);
                     });
                     try {
                         Thread.sleep(100);
@@ -187,6 +181,7 @@ public class Main {
         //getForm
         printButton.addActionListener(e -> {
             isActiveTriangle = isActiveTriangle ? false : false;
+            if (isActiveForm) return;
             isActiveForm = true;
             panel.repaint();
             JLabel lblEmailId = new JLabel("Email Id");
@@ -334,5 +329,11 @@ public class Main {
                 panel.remove(component);
             }
         }
+    }
+
+    private void drawShape(Shape shape, Color color) {
+        graphics.draw(shape);
+        graphics.setColor(color);
+        graphics.fill(shape);
     }
 }
