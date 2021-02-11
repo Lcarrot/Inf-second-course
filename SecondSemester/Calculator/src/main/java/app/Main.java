@@ -5,6 +5,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
@@ -16,18 +17,12 @@ public class Main {
         List<Integer> list = new LinkedList<>();
         ApplicationContext context
                 = new FileSystemXmlApplicationContext(getClass().getResource("/spring-config.xml").toString());
+        OperationFactory factory = new OperationFactory(context);
         while (true) {
             String str = scanner.nextLine();
-            if (str.equals("+") || str.equals("-") || str.equals("*")) {
-                MathOperation operation;
-                if (str.equals("+")) {
-                    operation = (MathOperation)context.getBean("addition");
-                } else if (str.equals("-")) {
-                    operation = (MathOperation) context.getBean("subtraction");
-                } else {
-                    operation = (MathOperation)context.getBean("multiplication");
-                }
-                System.out.println(operation.calculate(list));
+            Optional<MathOperation> operation = factory.getOperation(str);
+            if (operation.isPresent()) {
+                System.out.println(operation.get().calculate(list));
                 list = new LinkedList<>();
             }
             else {

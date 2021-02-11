@@ -2,6 +2,7 @@ package app;
 
 import java.util.List;
 
+
 public class Addition implements MathOperation{
     @Override
     public int calculate(List<Integer> numbers) {
