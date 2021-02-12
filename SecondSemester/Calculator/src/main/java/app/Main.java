@@ -5,29 +5,40 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         new Main();
     }
+
+    private final String[] commands = {"+", "-", "*"};
 
     public Main() {
         Scanner scanner = new Scanner(System.in);
         List<Integer> list = new LinkedList<>();
         ApplicationContext context
                 = new FileSystemXmlApplicationContext(getClass().getResource("/spring-config.xml").toString());
-        OperationFactory factory = new OperationFactory(context);
+        IOperationFactory factory = (IOperationFactory) context.getBean("factory");
         while (true) {
             String str = scanner.nextLine();
-            Optional<MathOperation> operation = factory.getOperation(str);
-            if (operation.isPresent()) {
-                System.out.println(operation.get().calculate(list));
-                list = new LinkedList<>();
+            boolean isCommand = false;
+            for (int i = 0; i < commands.length && !isCommand; i++) {
+                if (str.equals(commands[i])) {
+                    MathOperation operation = factory.getOperation(str);
+                    System.out.println(operation.calculate(list));
+                    isCommand = true;
+                    list = new LinkedList<>();
+                }
             }
-            else {
-                list.add(Integer.parseInt(str));
+            if (!isCommand) {
+                try {
+                    list.add(Integer.parseInt(str));
+                } catch (NumberFormatException e) {
+                    System.out.println("It's not a number!");
+                }
             }
         }
     }
+
 }
