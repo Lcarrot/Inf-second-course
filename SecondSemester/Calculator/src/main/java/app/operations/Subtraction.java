@@ -1,4 +1,4 @@
-package app;
+package app.operations;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Component
-public class Subtraction implements MathOperation{
+public class Subtraction implements MathOperation {
     @Override
     public int calculate(List<Integer> numbers) {
         Iterator<Integer> integerIterator = numbers.listIterator();

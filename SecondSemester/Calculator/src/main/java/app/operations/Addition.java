@@ -1,13 +1,14 @@
-package app;
+package app.operations;
 
 import java.util.List;
 
-public class Multiplication implements MathOperation{
+
+public class Addition implements MathOperation {
     @Override
     public int calculate(List<Integer> numbers) {
-        int result = 1;
+        int result = 0;
         for (Integer integer: numbers) {
-            result *= integer;
+            result += integer;
         }
         return result;
     }
