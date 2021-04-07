@@ -25,6 +25,7 @@ public class CmsServiceImpl implements CmsService {
 
     @Override
     public Optional<CmsPageDto> add(CmsPageForm pageForm) {
+        CmsPage cmsPage = convertFromFormToEntity(pageForm);
         return Optional.of(convertFromEntityToDto(repository.save(convertFromFormToEntity(pageForm))));
     }
 

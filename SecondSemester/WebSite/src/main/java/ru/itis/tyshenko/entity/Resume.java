@@ -18,7 +18,7 @@ public class Resume implements ru.itis.tyshenko.entity.Entity {
     private String header;
     private String description;
     private String contact;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "owner_id")
     private User owner;
 }

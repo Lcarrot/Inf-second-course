@@ -16,4 +16,5 @@ public interface UserService extends Service<UserDto, UserForm> {
     Optional<UserDto> confirmRegistration(String code);
     List<UserDto> getAll(Integer page);
     Integer getMaxPage();
+    Optional<UserDto> authenticate(UserForm adminForm);
 }

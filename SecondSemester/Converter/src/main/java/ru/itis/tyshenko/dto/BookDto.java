@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class AdminDto implements Dto {
+@AllArgsConstructor
+@Builder
 
-    private String login;
+public class BookDto {
+    private String name;
+    private Integer category;
 }

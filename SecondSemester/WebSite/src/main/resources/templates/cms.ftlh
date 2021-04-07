@@ -31,6 +31,7 @@
         <input type="text" placeholder="Name of page" name="name" id="name">
     </div>
     <textarea id="mytextarea" name="content"></textarea>
+    <input type="hidden" value="${user.login}">
     <button type="submit">Сохранить страницу</button>
 </form>
 </body>

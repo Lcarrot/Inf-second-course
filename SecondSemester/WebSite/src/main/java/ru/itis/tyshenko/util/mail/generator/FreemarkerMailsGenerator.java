@@ -2,6 +2,7 @@ package ru.itis.tyshenko.util.mail.generator;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ import java.util.Map;
 public class FreemarkerMailsGenerator implements MailsGenerator {
 
     @Autowired
-    freemarker.template.Configuration configuration;
+    private Configuration configuration;
 
     @Override
     public String generateConfirmEmail(String serverUrl, String code) {

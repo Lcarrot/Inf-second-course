@@ -7,10 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.itis.tyshenko.dto.AdminDto;
-import ru.itis.tyshenko.form.AdminForm;
+import ru.itis.tyshenko.dto.UserDto;
 import ru.itis.tyshenko.form.UserForm;
-import ru.itis.tyshenko.service.AdminService;
 import ru.itis.tyshenko.service.UserService;
 import ru.itis.tyshenko.util.BindingResultMessages;
 
@@ -22,8 +20,6 @@ import java.util.Optional;
 @Controller
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -37,8 +33,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/signIn")
-    public String checkSignIn(AdminForm adminForm) {
-        Optional<AdminDto> adminDto = adminService.authenticate(adminForm);
+    public String checkSignIn(UserForm adminForm) {
+        Optional<UserDto> adminDto = userService.authenticate(adminForm);
         if (adminDto.isPresent()) {
             return "cms_list";
         }

@@ -65,4 +65,9 @@ public class TestUserService implements UserService{
     public Integer getMaxPage() {
         return null;
     }
+
+    @Override
+    public Optional<UserDto> authenticate(UserForm adminForm) {
+        return Optional.of(userDto);
+    }
 }

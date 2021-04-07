@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Data
 @Entity
@@ -22,5 +20,7 @@ public class CmsPage implements ru.itis.tyshenko.entity.Entity {
     public Long id;
     private String name;
     private String content;
-
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "owner_id")
+    private User owner;
 }

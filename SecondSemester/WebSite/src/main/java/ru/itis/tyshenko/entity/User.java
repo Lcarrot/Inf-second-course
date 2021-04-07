@@ -23,10 +23,20 @@ public class User implements ru.itis.tyshenko.entity.Entity {
     private String gender;
     private String confirmCode;
     private boolean confirmed = false;
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "owner")
     private List<Ad> ads;
 
     @OneToMany(mappedBy = "owner")
     private List<Resume> resumes;
+
+    public enum  Role {
+        ADMIN, USER
+    }
+
+    public boolean isAdmin() {
+        return this.role.equals(Role.ADMIN);
+    }
 }

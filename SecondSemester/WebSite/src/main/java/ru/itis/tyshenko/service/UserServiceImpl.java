@@ -93,6 +93,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserDto> authenticate(UserForm adminForm) {
+        Optional<User> user = userRepository.getByLogin(adminForm.login);
+        if (user.isPresent() && passwordEncoder.matches(adminForm.getPassword(), user.get().getHashPassword())) {
+            return Optional.of(convertFromEntityToDto(user.get()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<UserDto> add(UserForm entity) {
         User user = convertFromFormToEntity(entity);
         user.setConfirmCode(UUID.randomUUID().toString());

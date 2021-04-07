@@ -1,9 +1,12 @@
 package ru.itis.tyshenko.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.DefaultMessageCodesResolver;
 import org.springframework.validation.MessageCodesResolver;
 import org.springframework.validation.Validator;
@@ -23,6 +26,7 @@ import java.util.Optional;
 public class WebConfig implements WebMvcConfigurer, BeanPostProcessor {
 
     private final Map<HandlerInterceptor, Interceptor> interceptorMap = new HashMap<>();
+    private final Map<Converter, ru.itis.tyshenko.converter.Converter> converterMap = new HashMap<>();
 
     @Autowired
     private LocalValidatorFactoryBean validatorFactoryBean;
@@ -40,7 +44,7 @@ public class WebConfig implements WebMvcConfigurer, BeanPostProcessor {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(@NotNull InterceptorRegistry registry) {
         interceptorMap.forEach((HandlerInterceptor key, Interceptor value) -> {
             InterceptorRegistration registration = registry.addInterceptor(key);
             if (value.pathPatterns().length > 0) {
@@ -54,27 +58,29 @@ public class WebConfig implements WebMvcConfigurer, BeanPostProcessor {
     }
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        scanInterceptorAnnotation(bean);
-        return bean;
+    public void addFormatters(@NotNull FormatterRegistry registry) {
+        converterMap.forEach((Converter converter, ru.itis.tyshenko.converter.Converter converterAnn)
+                -> registry.addConverter(converter));
     }
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        scanAnnotation(bean, HandlerInterceptor.class, Interceptor.class, interceptorMap);
+        scanAnnotation(bean, Converter.class, ru.itis.tyshenko.converter.Converter.class, converterMap);
         return bean;
     }
 
-    protected void scanInterceptorAnnotation(Object bean) {
-        Optional<Interceptor> optionalInterceptor = getInterceptorAnnotation(bean.getClass());
-        if (optionalInterceptor.isPresent() && bean instanceof HandlerInterceptor) {
-            interceptorMap.put((HandlerInterceptor) bean, optionalInterceptor.get());
+    private <T, V extends Annotation> void scanAnnotation(Object bean, Class<T> classes, Class<V> annClass, Map<T,V> map) {
+        Optional<V> optionalConverter = getAnnotation(bean.getClass(), annClass);
+        if (optionalConverter.isPresent() && bean.getClass().equals(classes)) {
+            map.put((T) bean, optionalConverter.get());
         }
     }
 
-    private Optional<Interceptor> getInterceptorAnnotation(Class<?> classes) {
-        Annotation[] annotations = classes.getAnnotationsByType(Interceptor.class);
+    private <T extends Annotation> Optional<T> getAnnotation(Class<?> classes, Class<T> annClass) {
+        Annotation[] annotations = classes.getAnnotationsByType(annClass);
         if (annotations.length > 0) {
-            return Optional.of(((Interceptor) annotations[0]));
+            return Optional.of((T) annotations[0]);
         }
         return Optional.empty();
     }

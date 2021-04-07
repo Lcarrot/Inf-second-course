@@ -23,6 +23,7 @@ public class SignInController {
 
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     public String getUser(HttpServletRequest request, UserDto userDTO) {
+        request.getSession().setAttribute("user", userDTO);
         return "profile";
     }
 }

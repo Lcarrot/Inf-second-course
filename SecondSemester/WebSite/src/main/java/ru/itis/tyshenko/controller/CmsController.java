@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.tyshenko.dto.CmsPageDto;
+import ru.itis.tyshenko.dto.UserDto;
 import ru.itis.tyshenko.form.CmsPageForm;
 import ru.itis.tyshenko.service.CmsService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -21,13 +23,14 @@ public class CmsController {
     private CmsService service;
 
     @GetMapping("/admin/cms")
-    public String getPage(CmsPageForm form, Model model) {
+    public String getPage(CmsPageForm form, HttpServletRequest request, Model model) {
         model.addAttribute("pageForm", form);
+        model.addAttribute("user_id", ((UserDto)(request.getSession().getAttribute("user"))));
         return "cms";
     }
 
     @PostMapping("/admin/cms")
-    public String savePage(@Valid CmsPageForm form, BindingResult result) {
+    public String savePage(@Valid CmsPageForm form, BindingResult result, HttpServletRequest request) {
         if (!result.hasErrors()) {
             service.add(form);
             return "redirect:/admin/cmsList";
